@@ -16,12 +16,13 @@ RAMP = " .`:-=+*cs#%@"
 FONT_SIZE = 10
 CHAR_W = 6.02  # monospace advance at 10px
 LINE_H = 10.6
-PAD = 16
-TOP = 44
+PAD = 0
+TOP = 0
 ROW_DELAY = 0.045  # seconds between rows
 ROW_DUR = 0.35
 
 STATIC = os.environ.get("STATIC") == "1"
+BEGIN = 0.6
 
 img = Image.open(ROOT / "assets/source.png").convert("RGB")
 arr = np.asarray(img).astype(int)
@@ -48,8 +49,8 @@ for y in range(rows):
             row.append((RAMP[idx], BODY if idx > 7 else EDGE))
     lines.append(row)
 
-width = round(COLS * CHAR_W + 2 * PAD)
-height = round(TOP + rows * LINE_H + PAD)
+width = round(COLS * CHAR_W)
+height = round(rows * LINE_H)
 
 defs, body = [], []
 for y, row in enumerate(lines):
@@ -66,13 +67,17 @@ for y, row in enumerate(lines):
     if STATIC:
         body.append(text)
         continue
-    begin = 0.3 + y * ROW_DELAY
+    begin = BEGIN + y * ROW_DELAY
     defs.append(
         f'<clipPath id="r{y}"><rect x="{PAD}" y="{ty - LINE_H + 2:.1f}" height="{LINE_H + 1:.1f}" width="0">'
         f'<animate attributeName="width" from="0" to="{COLS * CHAR_W + 2:.1f}" begin="{begin:.2f}s" '
         f'dur="{ROW_DUR}s" fill="freeze"/></rect></clipPath>')
     body.append(f'<g clip-path="url(#r{y})">{text}</g>')
 
-svg = window(width, height, "~/salamander.txt", "\n".join(body), "".join(defs))
-(ROOT / "ascii-art.svg").write_text(svg)
-print(f"wrote ascii-art.svg ({COLS}x{rows}, {width}x{height}px, {len(svg) // 1024} KB)")
+DEFS, BODY, WIDTH, HEIGHT = "".join(defs), "\n".join(body), width, height
+
+if __name__ == "__main__":
+    svg = window(width + 32, height + 60, "~/salamander.txt",
+                 f'<g transform="translate(16 44)">{BODY}</g>', DEFS)
+    (ROOT / "ascii-art.svg").write_text(svg)
+    print(f"wrote ascii-art.svg ({COLS}x{rows}, {len(svg) // 1024} KB)")

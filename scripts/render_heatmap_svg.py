@@ -4,7 +4,7 @@ import os
 from datetime import date
 from pathlib import Path
 
-from theme import ACCENT, MUTED, TEXT, window
+from theme import ACCENT, MUTED, PROMPT, TEXT, window
 
 ROOT = Path(__file__).resolve().parent.parent
 STATIC = os.environ.get("STATIC") == "1"
@@ -66,8 +66,9 @@ legend = (f'<text x="{legend_x}" y="{TOP - 30}" fill="{MUTED}" font-size="10.5">
           + "".join(f'<rect x="{legend_x + 28 + i * STEP}" y="{TOP - 40}" width="{CELL}" height="{CELL}" rx="2.5" fill="{c}"/>'
                     for i, c in enumerate(LEVELS))
           + f'<text x="{legend_x + 32 + 6 * STEP}" y="{TOP - 30}" fill="{MUTED}" font-size="10.5">more</text>')
-title = (f'<text x="22" y="{TOP - 30}" fill="{TEXT}" font-size="12.5">last 12 months · '
-         f'<tspan fill="{MUTED}">updated {date.today().isoformat()}</tspan></text>')
+title = (f'<text x="22" y="{TOP - 30}" font-size="13.5"><tspan fill="{PROMPT}">❯</tspan>'
+         f'<tspan fill="{TEXT}"> ./contributions.sh</tspan>'
+         f'<tspan fill="{MUTED}" font-size="12">  # last 12 months, updated {date.today().isoformat()}</tspan></text>')
 
 style = "" if STATIC else """
 .c { opacity: 0; animation: drop .5s cubic-bezier(.2,.8,.3,1) forwards; }
@@ -77,5 +78,5 @@ style = "" if STATIC else """
 """
 H = grid_bottom + 66
 body = title + legend + "".join(months) + wd + "".join(cells) + stats_svg
-(ROOT / "contrib-heatmap.svg").write_text(window(W, H, "~/contributions.sh", body, style=style))
+(ROOT / "contrib-heatmap.svg").write_text(window(W, H, "johannes@github: ~", body, style=style))
 print(f"wrote contrib-heatmap.svg ({W}x{H}px, {len(cells)} cells)")
