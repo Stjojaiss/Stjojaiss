@@ -2,41 +2,6 @@
  "user": "Stjojaiss",
  "days": [
   {
-   "date": "2025-10-26",
-   "level": 0,
-   "count": 0
-  },
-  {
-   "date": "2025-10-27",
-   "level": 0,
-   "count": 0
-  },
-  {
-   "date": "2025-10-28",
-   "level": 0,
-   "count": 0
-  },
-  {
-   "date": "2025-10-29",
-   "level": 0,
-   "count": 0
-  },
-  {
-   "date": "2025-10-30",
-   "level": 0,
-   "count": 0
-  },
-  {
-   "date": "2025-10-31",
-   "level": 0,
-   "count": 0
-  },
-  {
-   "date": "2025-11-01",
-   "level": 0,
-   "count": 0
-  },
-  {
    "date": "2025-11-02",
    "level": 0,
    "count": 0
@@ -1853,15 +1818,20 @@
   },
   {
    "date": "2026-10-31",
+   "level": 1,
+   "count": 1
+  },
+  {
+   "date": "2026-11-01",
    "level": 0,
    "count": 0
   }
  ],
  "stats": {
-  "total": 58,
-  "active_days": 34,
-  "current_streak": 25,
-  "longest_streak": 25,
+  "total": 59,
+  "active_days": 35,
+  "current_streak": 26,
+  "longest_streak": 26,
   "best_day": {
    "date": "2026-08-03",
    "count": 8
